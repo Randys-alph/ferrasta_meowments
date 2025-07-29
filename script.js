@@ -296,17 +296,22 @@ document.addEventListener('DOMContentLoaded', () => {
         winScreen.classList.add('hidden');
         boardContainer.style.gridTemplateColumns = `repeat(${puzzleSize}, 1fr)`;
 
+        // Trik "Cache Busting"
+        const cacheBuster = `?v=${new Date().getTime()}`;
+        const imageUrl = `'${puzzleImageSrc}${cacheBuster}'`;
+
         let pieces = [];
         for (let i = 0; i < puzzleSize * puzzleSize; i++) {
             const piece = document.createElement('div');
             piece.className = 'puzzle-piece';
             piece.draggable = true;
-            piece.style.backgroundImage = `url('${puzzleImageSrc}')`;
+            piece.style.backgroundImage = `url(${imageUrl})`; // Menggunakan URL baru
             const row = Math.floor(i / puzzleSize);
             const col = i % puzzleSize;
             piece.style.backgroundPosition = `-${col * pieceSize}px -${row * pieceSize}px`;
             piece.dataset.id = i.toString();
             pieces.push(piece);
+
             const slot = document.createElement('div');
             slot.className = 'puzzle-slot';
             slot.dataset.id = i.toString();
@@ -334,12 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const sourceContainer = draggedPiece.parentElement;
                 const targetSlot = e.currentTarget;
                 const existingPiece = targetSlot.children.length > 0 ? targetSlot.children[0] : null;
-                puzzleMoveHistory.push({
-                    piece: draggedPiece,
-                    from: sourceContainer,
-                    to: targetSlot,
-                    swappedPiece: existingPiece
-                });
+                puzzleMoveHistory.push({ piece: draggedPiece, from: sourceContainer, to: targetSlot, swappedPiece: existingPiece });
                 if (existingPiece) {
                     sourceContainer.appendChild(existingPiece);
                 }
