@@ -84,22 +84,22 @@ document.addEventListener('DOMContentLoaded', () => {
     let clickResetTimer = null;
     const puzzleImageSrc = 'images/games/puzzle_photo.jpg';
     const puzzleSize = 4;
+    const pieceSize = 80;
+
 
     // =====================================================================
     // BAGIAN 2: DEFINISI FUNGSI
     // =====================================================================
-
+    
     function applyTimeBasedTheme() {
-        const currentHour = new Date().getHours(); // Dapatkan jam saat ini (0-23)
-
-        // Jika waktu antara jam 6 sore (18) dan 6 pagi (6)
+        const currentHour = new Date().getHours();
         if (currentHour >= 18 || currentHour < 6) {
             document.body.classList.add('theme-night');
         } else {
             document.body.classList.add('theme-day');
         }
     }
-    
+
     function checkScheduledMessages() {
         const today = new Date();
         const year = today.getFullYear();
@@ -187,10 +187,15 @@ document.addEventListener('DOMContentLoaded', () => {
         scoreText.textContent = score;
         totalText.textContent = quizQuestions.length;
         const percentage = (score / quizQuestions.length) * 100;
-        if (percentage === 100) resultMessageText.textContent = "SEMPURNA! Yeaayyy kamu ingat semuanya! 💖";
-        else if (percentage >= 70) resultMessageText.textContent = "Wow, keren! Ingatan bocil dori kuat sekali!";
-        else if (percentage >= 50) resultMessageText.textContent = "Lumayan! Kayanya kita perlu buat lebih banyak kenangan lagi ekkk!";
-        else resultMessageText.textContent = "Hehe, gapapa. Yang penting kita selalu bersama selamanya!";
+        if (percentage === 100) {
+            resultMessageText.textContent = "🤩 SEMPURNA! Aku bangga banget kamu ingat semua detail kecil tentang kita. Kamu memang yang terbaik! 💖";
+        } else if (percentage >= 75) {
+            resultMessageText.textContent = "🥰 Hebat! Hampir semua benar. Aku seneng banget kamu masih simpan momen-momen itu di hati.";
+        } else if (percentage >= 50) {
+            resultMessageText.textContent = "😊 Keren! Lebih dari separuh kamu jawab benar. Nggak semua harus diingat, yang penting kita jalaninya bareng.";
+        } else {
+            resultMessageText.textContent = "😂 Hehe, nggak apa-apa kalau ada yang lupa. Justru ini jadi alasan buat kita ngobrolin lagi kenangan lama dan bikin yang baru!";
+        }
     }
 
     function closeLightbox() {
@@ -294,27 +299,27 @@ document.addEventListener('DOMContentLoaded', () => {
         let pieces = [];
         for (let i = 0; i < puzzleSize * puzzleSize; i++) {
             const piece = document.createElement('div');
-            piece.classList.add('puzzle-piece');
+            piece.className = 'puzzle-piece';
             piece.draggable = true;
-            piece.style.backgroundImage = `url(${puzzleImageSrc})`;
+            piece.style.backgroundImage = `url('${puzzleImageSrc}')`;
             const row = Math.floor(i / puzzleSize);
             const col = i % puzzleSize;
-            piece.style.backgroundPosition = `-${col * 80}px -${row * 80}px`;
-            piece.dataset.id = i;
+            piece.style.backgroundPosition = `-${col * pieceSize}px -${row * pieceSize}px`;
+            piece.dataset.id = i.toString();
             pieces.push(piece);
             const slot = document.createElement('div');
-            slot.classList.add('puzzle-slot');
-            slot.dataset.id = i;
+            slot.className = 'puzzle-slot';
+            slot.dataset.id = i.toString();
             boardContainer.appendChild(slot);
         }
 
         pieces.forEach(piece => {
             piece.addEventListener('dragstart', (e) => {
-                e.dataTransfer.setData('text/plain', piece.dataset.id);
-                setTimeout(() => piece.style.visibility = 'hidden', 0);
+                e.dataTransfer.setData('text/plain', e.target.dataset.id);
+                setTimeout(() => e.target.style.visibility = 'hidden', 0);
             });
-            piece.addEventListener('dragend', () => {
-                piece.style.visibility = 'visible';
+            piece.addEventListener('dragend', (e) => {
+                e.target.style.visibility = 'visible';
             });
         });
 
@@ -325,18 +330,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.preventDefault();
                 const pieceId = e.dataTransfer.getData('text/plain');
                 const draggedPiece = document.querySelector(`.puzzle-piece[data-id='${pieceId}']`);
+                if (!draggedPiece) return;
                 const sourceContainer = draggedPiece.parentElement;
-                const existingPiece = e.currentTarget.children.length > 0 ? e.currentTarget.children[0] : null;
+                const targetSlot = e.currentTarget;
+                const existingPiece = targetSlot.children.length > 0 ? targetSlot.children[0] : null;
                 puzzleMoveHistory.push({
                     piece: draggedPiece,
                     from: sourceContainer,
-                    to: e.currentTarget,
+                    to: targetSlot,
                     swappedPiece: existingPiece
                 });
                 if (existingPiece) {
                     sourceContainer.appendChild(existingPiece);
                 }
-                e.currentTarget.appendChild(draggedPiece);
+                targetSlot.appendChild(draggedPiece);
                 checkWinCondition();
             });
         });
@@ -346,13 +353,9 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const pieceId = e.dataTransfer.getData('text/plain');
             const draggedPiece = document.querySelector(`.puzzle-piece[data-id='${pieceId}']`);
+            if (!draggedPiece) return;
             const sourceContainer = draggedPiece.parentElement;
-            puzzleMoveHistory.push({
-                piece: draggedPiece,
-                from: sourceContainer,
-                to: pieceContainer,
-                swappedPiece: null
-            });
+            puzzleMoveHistory.push({ piece: draggedPiece, from: sourceContainer, to: pieceContainer, swappedPiece: null });
             pieceContainer.appendChild(draggedPiece);
         });
 
@@ -361,25 +364,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function checkWinCondition() {
-        const boardContainer = document.getElementById('board-container');
-        const slots = boardContainer.querySelectorAll('.puzzle-slot');
-        let isWin = true;
-        for (const slot of slots) {
-            if (slot.children.length === 0 || slot.children[0].dataset.id !== slot.dataset.id) {
-                isWin = false;
-                break;
-            }
-        }
+        const slots = document.querySelectorAll('#board-container .puzzle-slot');
+        const isWin = Array.from(slots).every(slot => 
+            slot.children.length > 0 && slot.children[0].dataset.id === slot.dataset.id
+        );
         if (isWin) {
-            document.getElementById('puzzle-win-screen').classList.remove('hidden');
+            const winScreen = document.getElementById('puzzle-win-screen');
+            if (winScreen) winScreen.classList.remove('hidden');
         }
     }
 
     function undoPuzzleMove() {
-        if (puzzleMoveHistory.length === 0) {
-            console.log("Tidak ada langkah untuk di-undo.");
-            return;
-        }
+        if (puzzleMoveHistory.length === 0) return;
         const lastMove = puzzleMoveHistory.pop();
         lastMove.from.appendChild(lastMove.piece);
         if (lastMove.swappedPiece) {
@@ -414,11 +410,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const emojiYangDiklik = tombol.textContent;
                 let feedbackMessage = "";
                 switch (emojiYangDiklik) {
-                    case '😠': feedbackMessage = "Yah, maaf ya kalau websitenya masih elek. Aku perbaiki lagi. Menurutmu, apa yang paling kurang dari website ini?"; break;
+                    case '😠': feedbackMessage = "Yah, maaf ya kalau websitenya elek. Aku perbaiki lagi. Menurutmu, apa yang paling kurang dari website ini?"; break;
                     case '😐': feedbackMessage = "Hehe, maaf ya kalau aneh atau websitenya ngebosenin. Menurutmu, apa yang bisa aku tambahin biar lebih seru?"; break;
                     case '😊': feedbackMessage = "Okeey bocil! Aku masih belajar bikin web, hehe. Kamu mau kasih saran fitur apa biar jadi lebih bagus?"; break;
-                    case '🥰': feedbackMessage = "Tamu kerennn! Makasih ya udah mau explore webnya. Semoga kamu suka sama hadiah kecil ini."; break;
-                    case '🤩': feedbackMessage = "Alobu. Makasih banyak ya udah mau cobain semua fitur di website ini. Aku seneng banget kamu suka! Love you bocikk!"; break;
+                    case '🤩': feedbackMessage = "Kerennnn! Makasih ya udah mau explore webnya. Semoga kamu suka sama hadiah kecil ini."; break;
+                    case '🥰': feedbackMessage = "Alobu! Makasih banyak ya udah mau cobain semua fitur di website ini. Aku seneng banget kamu suka! Love you bocikk!"; break;
                     default: feedbackMessage = "Terima kasih atas reaksimu!";
                 }
                 pesanReaksi.textContent = feedbackMessage;
@@ -480,17 +476,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
         observer.observe(gamesPage, { attributes: true });
-    }
-
-    const mainVideo = document.getElementById('mainVideo');
-    if (mainVideo) {
-        mainVideo.addEventListener('click', () => {
-            if (mainVideo.paused) {
-                mainVideo.play();
-            } else {
-                mainVideo.pause();
-            }
-        });
     }
 
     // --- Panggilan Fungsi Awal Saat Halaman Dimuat ---
