@@ -88,6 +88,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // =====================================================================
     // BAGIAN 2: DEFINISI FUNGSI
     // =====================================================================
+
+    function applyTimeBasedTheme() {
+        const currentHour = new Date().getHours(); // Dapatkan jam saat ini (0-23)
+
+        // Jika waktu antara jam 6 sore (18) dan 6 pagi (6)
+        if (currentHour >= 18 || currentHour < 6) {
+            document.body.classList.add('theme-night');
+        } else {
+            document.body.classList.add('theme-day');
+        }
+    }
     
     function checkScheduledMessages() {
         const today = new Date();
@@ -483,6 +494,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Panggilan Fungsi Awal Saat Halaman Dimuat ---
+    applyTimeBasedTheme();
     updateRelationshipCounter();
     checkScheduledMessages();
     showNewReason();
