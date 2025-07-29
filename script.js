@@ -72,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const resetPuzzleBtn = document.getElementById('reset-puzzle-btn');
     const restartPuzzleBtn = document.getElementById('restart-puzzle-btn');
     const undoPuzzleBtn = document.getElementById('undo-puzzle-btn');
+    const mainVideo = document.getElementById('mainVideo');
     const gamesPage = document.getElementById('games');
     
     // --- Variabel State ---
@@ -458,6 +459,17 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    if (mainVideo) {
+        mainVideo.addEventListener('click', () => {
+            if (mainVideo.paused) {
+                mainVideo.play();
+            } else {
+                mainVideo.pause();
+            }
+        });
+    }
+    
     if (closeSecretBtn) {
         closeSecretBtn.addEventListener('click', () => {
             if (secretOverlay) secretOverlay.classList.add('hidden');
@@ -477,6 +489,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         observer.observe(gamesPage, { attributes: true });
     }
+
 
     // --- Panggilan Fungsi Awal Saat Halaman Dimuat ---
     applyTimeBasedTheme();
