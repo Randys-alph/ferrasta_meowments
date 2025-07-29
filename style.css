@@ -1,0 +1,677 @@
+/* ======================= PENGATURAN DASAR & FONT ======================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f5;
+    color: #27272a;
+    text-align: center;
+}
+
+/* ======================= PRELOADER ======================= */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f5;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    transition: opacity 0.75s ease, visibility 0.75s ease;
+}
+
+#preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader-icon {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #e4e4e7;
+    border-top-color: #f97316;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+#preloader p {
+    font-weight: 600;
+    color: #a1a1aa;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ======================= HEADER & NAVIGASI ======================= */
+.site-header {
+    background-color: #ffffff;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 2px solid #e4e4e7;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #f97316;
+}
+
+.site-header h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: 1.8rem;
+    color: #f97316;
+    font-weight: 400;
+}
+
+.main-nav {
+    display: flex;
+    justify-content: center;
+    background-color: #fff;
+    padding: 0.5rem 0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.nav-link {
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    color: #52525b;
+    font-weight: 600;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s ease-in-out;
+}
+
+.nav-link.active-link {
+    color: #f97316;
+    border-bottom-color: #f97316;
+}
+
+/* ======================= STRUKTUR HALAMAN & KONTEN UTAMA ======================= */
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+main {
+    padding: 1.5rem;
+}
+
+.photo-container {
+    margin-bottom: 2rem;
+}
+
+.main-photo {
+    max-width: 80%;
+    height: auto;
+    border: 10px solid #ffffff;
+    border-bottom-width: 45px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    transform: rotate(-3deg);
+    transition: transform 0.3s ease;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.main-photo:hover,
+.main-photo:active {
+    transform: rotate(0deg) scale(1.05);
+}
+
+.relationship-counter, .countdown-section, .greeting-card, .guestbook-section, .interactive-zone, .reason-generator, .quiz-container, .puzzle-section {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    margin-bottom: 2rem;
+}
+
+/* ======================= COUNTER & COUNTDOWN ======================= */
+.cat-level-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+#cat-age-image {
+    width: 60px;
+    height: 60px;
+    transition: transform 0.5s ease;
+}
+
+#relationship-level {
+    font-family: 'Pacifico', cursive;
+    font-size: 1.8rem;
+    color: #f97316;
+}
+
+.days-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #3f3f46;
+    margin-bottom: 1rem;
+}
+
+.days-text span {
+    font-size: 1.5rem;
+    color: #f97316;
+}
+
+.progress-bar-container {
+    width: 100%;
+    background-color: #e4e4e7;
+    border-radius: 10px;
+    height: 15px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #f97316, #fb923c);
+    border-radius: 10px;
+    transition: width 1s ease-in-out;
+}
+
+.progress-checkpoints {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.checkpoint {
+    position: absolute;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    transform: translateX(-50%);
+}
+
+.anniversary-goal {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #71717a;
+    font-weight: 500;
+}
+
+.anniversary-date {
+    font-size: 0.9rem;
+    color: #a1a1aa;
+    margin-top: -0.25rem;
+}
+
+.countdown-section {
+    background-color: #111827;
+    color: #f4f4f5;
+}
+
+#countdown-title {
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    color: #e4e4e7;
+}
+
+#countdown-timer {
+    display: flex;
+    justify-content: space-around;
+    gap: 0.5rem;
+}
+
+.time-block {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 0.5rem;
+    border-radius: 8px;
+    flex: 1;
+    min-width: 60px;
+}
+
+.time-block span {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #f97316;
+}
+
+.time-block .time-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #a1a1aa;
+}
+
+/* ======================= KONTEN SECTION LAINNYA ======================= */
+.greeting-card h2, .guestbook-section h2, .reason-generator h2 {
+    font-family: 'Pacifico', cursive;
+    font-size: 2rem;
+    color: #18181b;
+    margin-bottom: 1.5rem;
+}
+
+.guestbook-section h2, .reason-generator h2 { text-align: center; }
+
+.reason-generator {
+    background-color: #fff7ed;
+    border: 2px dashed #fb923c;
+}
+
+.reason-generator h2 {
+    color: #c2410c;
+    font-size: 1.8rem;
+}
+
+.reason-display {
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+#reason-text {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: #7c2d12;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.reason-button {
+    background-color: #ea580c;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 1rem;
+}
+
+.reason-button:hover {
+    background-color: #c2410c;
+    transform: scale(1.05);
+}
+
+.guestbook-section {
+    text-align: left;
+}
+
+.guestbook-form textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e4e4e7;
+    border-radius: 8px;
+    font-size: 1rem;
+    resize: vertical;
+    margin-bottom: 0.75rem;
+}
+
+.guestbook-entries {
+    margin-top: 1.5rem;
+}
+
+.guestbook-entry {
+    border-bottom: 1px dashed #ddd;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.guestbook-entry:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.guestbook-entry .message-date {
+    font-size: 0.8rem;
+    color: #a1a1aa;
+    text-align: right;
+    margin-top: 0.5rem;
+}
+
+.interactive-zone p {
+    font-weight: 600;
+}
+
+.reactions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.reaction-emoji {
+    background: none;
+    border: none;
+    font-size: 2.5rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.reaction-emoji:hover, .reaction-emoji:active {
+    transform: scale(1.3);
+}
+
+.reaction-message {
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #f97316;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+/* ======================= GALERI & GAMES ======================= */
+.page-section {
+    padding: 1.5rem;
+    margin-top: 0;
+}
+
+.page-section h2 {
+    font-family: 'Pacifico', cursive;
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+    color: #18181b;
+}
+
+.gallery-years > details {
+    margin-bottom: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.gallery-years > details > summary {
+    list-style: none;
+    padding: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #f4f4f5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.gallery-years > details > summary::-webkit-details-marker { display: none; }
+.gallery-years > details > summary::after { content: '+'; font-size: 1.2rem; }
+.gallery-years > details[open] > summary::after { content: '−'; }
+
+.gallery-months {
+    padding: 0 1rem 1rem 1rem;
+    background-color: #fff;
+}
+.gallery-months > details {
+    margin-top: 0.5rem;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    overflow: hidden;
+}
+.gallery-months > details > summary {
+    list-style: none;
+    padding: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    background-color: #fafafa;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.gallery-months > details > summary::-webkit-details-marker { display: none; }
+.gallery-months > details > summary::after { content: '+'; }
+.gallery-months > details[open] > summary::after { content: '−'; }
+
+.month-photos {
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 0.5rem;
+}
+.month-photos img {
+    width: 100%;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.quiz-button {
+    background-color: #f97316;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.quiz-button:hover { background-color: #ea580c; }
+
+.quiz-container h3, .puzzle-section h3 {
+    font-family: 'Pacifico', cursive;
+    font-size: 1.8rem;
+    color: #f97316;
+}
+
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+}
+
+.option-btn {
+    background-color: #f4f4f5;
+    border: 2px solid #e4e4e7;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.option-btn:hover { border-color: #f97316; background-color: #fff7ed; }
+.option-btn.correct { background-color: #dcfce7; border-color: #22c55e; color: #166534; }
+.option-btn.wrong { background-color: #fee2e2; border-color: #ef4444; color: #991b1b; }
+
+#quiz-feedback { font-weight: 600; min-height: 24px; }
+#quiz-result-message { font-size: 1.2rem; font-weight: 600; margin: 1rem 0 1.5rem 0; }
+
+.puzzle-section { margin-top: 2rem; }
+#puzzle-game-container { display: flex; flex-direction: column; gap: 1.5rem; }
+.piece-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: center;
+    padding: 10px;
+    background-color: #f4f4f5;
+    border-radius: 8px;
+}
+.board-container {
+    display: grid;
+    gap: 2px;
+    border: 3px dashed #e4e4e7;
+    background-color: #fafafa;
+    margin: 0 auto;
+    width: 326px;
+}
+.puzzle-piece, .puzzle-slot {
+    width: 80px;
+    height: 80px;
+    background-size: 320px 320px;
+    border: 1px solid #ddd;
+}
+.puzzle-piece { cursor: grab; }
+.puzzle-piece:active { cursor: grabbing; }
+
+.puzzle-win-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1010;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.puzzle-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* ======================= OVERLAYS (LIGHTBOX, PUZZLE, SECRET) ======================= */
+.hidden {
+    display: none !important;
+}
+
+/* Base style untuk semua container overlay */
+.lightbox, .puzzle-win-screen, .secret-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    animation: fadeIn 0.3s;
+}
+
+/* Backgrounds */
+.lightbox { background-color: rgba(0, 0, 0, 0.85); }
+.puzzle-win-screen { background-color: rgba(0, 0, 0, 0.8); }
+.secret-overlay { background: linear-gradient(45deg, rgba(234, 88, 12, 0.9), rgba(251, 146, 60, 0.9)); }
+
+/* Urutan Lapisan (Z-INDEX) */
+.lightbox           { z-index: 1000; }
+.lightbox-close     { z-index: 1001; }
+.puzzle-win-screen  { z-index: 1010; }
+.secret-overlay     { z-index: 1020; }
+#close-secret-btn   { z-index: 1021; }
+
+/* Konten di dalam Lightbox */
+.lightbox-content {
+    max-width: 95%;
+    max-height: 85vh;
+    object-fit: contain;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.lightbox-caption {
+    text-align: center;
+    color: #ccc;
+    position: absolute;
+    bottom: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+}
+
+/* Konten di dalam Puzzle Win Screen & Secret Overlay */
+.secret-content {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    max-width: 90%;
+    animation: zoomIn 0.5s 0.2s ease-in-out forwards;
+    opacity: 0; /* Awalnya transparan untuk animasi */
+}
+
+.secret-content h2 {
+    font-family: 'Pacifico', cursive;
+    color: #f97316;
+}
+
+.secret-content p {
+    margin-bottom: 1.5rem;
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* ======================= FOOTER & MUSIC BTN ======================= */
+.music-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #f97316;
+    color: white;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    z-index: 998;
+    transition: transform 0.2s ease;
+}
+
+.music-btn:hover {
+    transform: scale(1.1);
+}
+
+.music-btn .pause-icon {
+    font-size: 1.2rem;
+}
+
+footer {
+    padding: 2rem 1rem;
+    font-size: 0.9rem;
+    color: #a1a1aa;
+}
