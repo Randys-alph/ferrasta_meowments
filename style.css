@@ -454,9 +454,12 @@ body.theme-night .option-btn.correct, body.theme-night .option-btn.wrong { color
 .lightbox-caption { text-align: center; color: #ccc; position: absolute; bottom: 2%; left: 50%; transform: translateX(-50%); width: 90%; }
 
 .secret-content {
-    background: var(--card-bg-color); padding: 2rem; border-radius: 15px; text-align: center;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); max-width: 90%;
-    animation: zoomIn 0.5s 0.2s ease-in-out forwards; opacity: 0;
+    background: var(--card-bg-color);
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    max-width: 90%;
 }
 .secret-content h2 { font-family: 'Pacifico', cursive; color: var(--accent-color); }
 .secret-content p { margin-bottom: 1.5rem; color: var(--text-color-dark); }
